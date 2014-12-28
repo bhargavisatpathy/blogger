@@ -10,7 +10,11 @@ class ArticlesController < ApplicationController
     else
       @articles = Article.all
     end
-    @articles
+    
+    # respond_to do |format|
+    #   format.html { render }
+    #   format.rss { render :layout => false }
+    # end
   end
 
   def show
@@ -48,5 +52,4 @@ class ArticlesController < ApplicationController
     flash.notice = "Article '#{@article.title}' was updated!"
     redirect_to article_path(@article)
   end
-
 end

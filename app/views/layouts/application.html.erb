@@ -19,6 +19,9 @@
     </li>
     <li> <%= link_to "Tags", tags_path %></li>
     <li> <%= link_to "Popular Articles", articles_path(popularity: true) %></li>
+    <% if logged_in? %>
+      <li><%= link_to "Authors", authors_path %></li>
+    <% end %>
     <li><%= link_to "RSS Feed", articles_url(:rss) %></li>
   </ul>
 </div>

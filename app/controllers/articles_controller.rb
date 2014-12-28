@@ -1,15 +1,23 @@
 class ArticlesController < ApplicationController
   before_filter :require_login, except: [:index, :show]
-  
+
   include ArticlesHelper
   def index
-    @articles = Article.all
+    if params[:month]
+      @articles = Article.find_by_month(params[:month])
+    elsif params[:popularity]
+      @articles = Article.most_popular.take(3)
+    else
+      @articles = Article.all
+    end
+    @articles
   end
 
   def show
     @article = Article.find(params[:id])
     @comment = Comment.new
     @comment.article_id = @article.id
+    @article.view
   end
 
   def new
@@ -40,4 +48,5 @@ class ArticlesController < ApplicationController
     flash.notice = "Article '#{@article.title}' was updated!"
     redirect_to article_path(@article)
   end
+
 end

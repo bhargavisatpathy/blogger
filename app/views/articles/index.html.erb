@@ -1,4 +1,10 @@
-<h1>All Articles</h1>
+<% if params[:month] %>
+  <h1> Articles in <%= params[:month] %></h1>
+<% elsif params[:popularity] %>
+  <h1> Popular Articles</h1>
+<% else %>
+  <h1>All Articles</h1>
+<% end %>
 
 <ul id="articles">
   <% @articles.each do |article| %>
@@ -8,4 +14,5 @@
   </li>
   <% end %>
 </ul>
-  <%= link_to "Create a New Article", new_article_path, class: 'new_article' %>
+
+<%= link_to "Create a New Article", new_article_path, class: 'new_article' %>

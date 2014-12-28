@@ -16,4 +16,21 @@ class Article < ActiveRecord::Base
     new_or_found_tags = tag_names.collect { |name| Tag.find_or_create_by(name: name) }
     self.tags = new_or_found_tags
   end
+  
+  def view
+    update(view_count: view_count.to_i + 1)
+  end
+
+  def self.active_months
+    all.group_by {|article| article.created_at.strftime("%B") }.keys
+  end
+
+
+  def self.find_by_month(month)
+    all.select { |article| article.created_at.strftime("%B") == month }
+  end
+
+  def self.most_popular
+    all.sort_by { |article| article.view_count.to_i}.reverse
+  end
 end
